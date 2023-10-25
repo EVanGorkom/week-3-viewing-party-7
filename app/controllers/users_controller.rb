@@ -22,8 +22,13 @@ class UsersController <ApplicationController
 
   def login_user
     @user = User.find_by(email: params[:email])
-    redirect_to "/users/#{@user.id}"
-    # require 'pry';binding.pry
+    if @user != nil && @user.authenticate(params[:password])
+      flash[:success] = "Welcome, #{@user.name}"
+      redirect_to "/users/#{@user.id}"
+    else
+      flash[:error] = "Your email or password were incorrect, try again and be sure to check your spelling if you're dyslexic like me."
+      redirect_to "/login"
+    end
   end
 
   private 
