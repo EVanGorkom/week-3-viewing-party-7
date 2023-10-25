@@ -33,4 +33,14 @@ RSpec.describe 'Landing Page' do
       expect(page).to have_content(user2.email)
     end     
   end 
+
+  it 'prevents a user from accessing routes without logging in' do
+    wayne = User.create(name: "Wayne", email: "partytime@excellent.com", password: "stairwayTOheaven")
+
+    visit '/'
+    visit "/users/#{wayne.id}"
+
+    expect(current_path).to eq('/')
+    expect(page).to have_content("You need to log in to access this page.")
+  end
 end
