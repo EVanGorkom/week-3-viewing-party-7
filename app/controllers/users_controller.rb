@@ -33,6 +33,10 @@ class UsersController <ApplicationController
     end
   end
 
+  def logout
+    require 'pry';binding.pry
+  end
+
   private 
 
   def user_params 
